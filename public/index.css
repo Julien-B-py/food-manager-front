@@ -1,0 +1,130 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  background-color: #112D4E;
+  background-image: radial-gradient(circle, #112d4e, #0a284d, #04224b, #011d49, #001746);
+  background-size: 300% 300%;
+  background-position: 50%;
+  font-family: 'Roboto', sans-serif;
+}
+
+h1 {
+  font-size: 2.5rem;
+}
+
+h5 {
+  font-size: 1.25rem;
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.user-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+}
+
+.food {
+  display: flex;
+  margin: 10px 0;
+}
+
+.add-input {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.food-list {
+  margin: 0 auto 50px;
+  background: #DBE2EF;
+  border-radius: 5px;
+  box-shadow: 5px 5px 15px -5px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+}
+
+.empty-list {
+  margin: 0 auto 50px;
+  background: #DBE2EF;
+  border-radius: 5px;
+  box-shadow: 5px 5px 15px -5px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.category {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  background-color: #3F72AF;
+  color: #F9F7F7;
+  border-bottom: 1px solid rgba(219, 226, 239, .3);
+}
+
+.foodList {
+  padding: 0 20px;
+}
+
+.food>* {
+  flex: 1 1 0px;
+  align-items: center;
+  display: flex;
+}
+
+.food-icons {
+  justify-content: end;
+  flex: 0 0 5em;
+  gap: 0.3rem;
+}
+
+.food-center {
+  justify-content: center;
+}
+
+.category-end {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.inventory {
+  width: 90%;
+  max-width: 450px;
+}
+
+.header {
+  margin: 50px auto;
+  background: #F9F7F7;
+  border-radius: 5px;
+  box-shadow: 5px 5px 15px -5px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  color: #112D4E;
+  padding: 10px;
+}
+
+.action-icon {
+  text-decoration: none;
+  color: #3F72AF;
+}
+
+.action-icon:hover {
+  cursor: pointer;
+}
