@@ -3,9 +3,11 @@ import axios from "axios";
 import moment from "moment";
 
 import AddForm from "./AddForm";
-import FoodCategory from "./FoodCategory";
+import FoodInventory from "./FoodInventory";
+import Footer from "./Footer";
 
 function App() {
+  // Initialize user inputs with empty name, category and set the date input to current date
   const defaultInputs = {
     name: "",
     category: "",
@@ -13,10 +15,13 @@ function App() {
     expDate: moment().format("YYYY-MM-DD")
   };
 
+  // Store current food list data
   const [data, setData] = useState();
+  // Store changes on user inputs
   const [input, setInput] = useState(defaultInputs);
   const [loading, setLoading] = useState(false);
   const [updateNeeded, setUpdateNeeded] = useState(true);
+  // Store uniques categories
   const [categories, setCategories] = useState();
 
   const requestRefresh = () => {
@@ -25,17 +30,9 @@ function App() {
     }, 300);
   };
 
-  const deleteAll = async () => {
-    await axios
-      .delete("http://localhost:4000/api/delete-all")
-      .then((response) => console.log(response));
-
-    requestRefresh();
-  };
-
   useEffect(() => {
     async function fetchData() {
-      let response = await fetch("http://localhost:4000/api/data");
+      let response = await fetch("http://localhost:4000/api/get-list");
       response = await response.json();
 
       await setData(response);
@@ -49,12 +46,14 @@ function App() {
     }
   }, [updateNeeded]);
 
+  // When data are fetched and available, create an array of unique categories from datas.foods array and store it in categories.
   useEffect(() => {
     if (data) {
       setCategories([...new Set(data.foods.map((food) => food.category))]);
     }
   }, [data]);
 
+  // Handle and update user input values changes
   function handleChange(e) {
     const { name, value } = e.target;
     setInput((prevState) => {
@@ -62,6 +61,7 @@ function App() {
     });
   }
 
+  // Add a food entry to the current list
   async function addFood() {
     if (input.name && input.category) {
       const food = {
@@ -78,38 +78,35 @@ function App() {
           console.log(response);
         });
 
+      // Reset user inputs
       setInput(defaultInputs);
 
       requestRefresh();
     }
   }
 
+  // Delete all entries
+  const deleteAll = async () => {
+    try {
+      const response = await axios.delete(
+        "http://localhost:4000/api/delete-all"
+      );
+      requestRefresh();
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
-    <div className="App">
+    <div className="main">
       {loading && !data && <div>chargement</div>}
 
       {categories && (
-        <div className="inventory">
-          <div className="header">
-            <h1>Inventaire</h1>
-          </div>
-          {categories.length > 0 ? (
-            <div className="food-list">
-              {categories.map((category, index) => (
-                <FoodCategory
-                  key={index}
-                  category={category}
-                  foods={data.foods}
-                  onRefresh={requestRefresh}
-                />
-              ))}
-            </div>
-          ) : (
-            <div className="empty-list">
-              Liste vide, merci d'ajouter un élément
-            </div>
-          )}
-        </div>
+        <FoodInventory
+          categories={categories}
+          data={data}
+          requestRefresh={requestRefresh}
+        />
       )}
 
       <AddForm
@@ -118,6 +115,8 @@ function App() {
         addFood={addFood}
         deleteAll={deleteAll}
       />
+
+      <Footer />
     </div>
   );
 }
