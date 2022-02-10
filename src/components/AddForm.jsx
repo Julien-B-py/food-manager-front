@@ -1,61 +1,62 @@
-function AddForm({ input, handleChange, addFood, deleteAll }) {
+import Button from "@mui/material/Button";
+import MenuItem from "@mui/material/MenuItem";
+
+import CssTextField from "./CssTextField";
+
+import { categories } from "../constants/constants";
+
+function AddForm({ input, handleChange, addFood, closeModal }) {
   return (
     <div className="user-controls">
       <form className="add-input">
-        <input
+        <span>Ajouter un aliment</span>
+        <CssTextField
+          label="Aliment"
           name="name"
-          placeholder="Aliment"
+          onChange={(e) => handleChange(e)}
           value={input.name}
-          onChange={(e) => handleChange(e)}
-        ></input>
-        <select
+        />
+
+        <CssTextField
           name="category"
-          onChange={(e) => handleChange(e)}
+          select
+          label="Catégorie"
           value={input.category}
-        >
-          <option value="">Choisir catégorie</option>
-          <option>Boissons</option>
-          <option>Conserves</option>
-          <option>Fruits</option>
-          <option>Légumes</option>
-          <option>Plats préparés</option>
-          <option>Sucré</option>
-          <option>Viandes</option>
-          <option>Yaourts</option>
-        </select>
-        <input
-          type="number"
-          name="storageLife"
-          value={input.storageLife}
-          id="storageLife"
           onChange={(e) => handleChange(e)}
-        ></input>
-        <input
-          type="date"
+        >
+          {categories.map((categorie) => (
+            <MenuItem key={categorie} value={categorie}>
+              {categorie}
+            </MenuItem>
+          ))}
+        </CssTextField>
+
+        <CssTextField
+          label="Durée de conservation"
+          name="storageLife"
+          type="number"
+          onChange={(e) => handleChange(e)}
+          value={input.storageLife}
+        />
+        <CssTextField
+          label="Date de péremption"
           name="expDate"
+          type="date"
           onChange={(e) => handleChange(e)}
           value={input.expDate}
         />
-        <button
+
+        <Button
+          variant="contained"
           onClick={(e) => {
             e.preventDefault();
             addFood();
+            closeModal();
           }}
         >
           Ajouter
-        </button>
+        </Button>
       </form>
-      <div>
-        <button
-          onClick={() => {
-            if (window.confirm("Are you sure you wish to delete all items?")) {
-              deleteAll();
-            }
-          }}
-        >
-          Delete all
-        </button>
-      </div>
     </div>
   );
 }
