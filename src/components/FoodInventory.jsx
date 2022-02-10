@@ -12,7 +12,7 @@ function FoodInventory({ categories, data, requestRefresh }) {
             <FoodCategory
               key={index}
               category={category}
-              foods={data.foods}
+              foods={data}
               onRefresh={requestRefresh}
             />
           ))}

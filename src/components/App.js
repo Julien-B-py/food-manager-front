@@ -17,6 +17,9 @@ function App() {
 
   // Store current food list data
   const [data, setData] = useState();
+
+  const [filteredData, setFilteredData] = useState();
+
   // Store changes on user inputs
   const [input, setInput] = useState(defaultInputs);
   const [loading, setLoading] = useState(false);
@@ -30,12 +33,32 @@ function App() {
     }, 300);
   };
 
+  const filterData = (e) => {
+
+const {value} = e.target;
+let filteredData;
+
+if (value === "expired") {
+     filteredData = data.foods.filter(food => food.remainingDays <1 );
+      setFilteredData(filteredData)
+}
+
+else if (value === "few-days") {
+   filteredData = data.foods.filter(food => food.remainingDays <= 5 && food.remainingDays >= 1);
+
+    setFilteredData(filteredData)
+} else
+ filteredData = data.foods;
+    setFilteredData(filteredData)
+  }
+
   useEffect(() => {
     async function fetchData() {
       let response = await fetch("http://localhost:4000/api/get-list");
       response = await response.json();
 
       await setData(response);
+      await setFilteredData(response.foods);
       setLoading(false);
       setUpdateNeeded(false);
     }
@@ -48,10 +71,10 @@ function App() {
 
   // When data are fetched and available, create an array of unique categories from datas.foods array and store it in categories.
   useEffect(() => {
-    if (data) {
-      setCategories([...new Set(data.foods.map((food) => food.category))]);
+    if (filteredData) {
+      setCategories([...new Set(filteredData.map((food) => food.category))]);
     }
-  }, [data]);
+  }, [filteredData]);
 
   // Handle and update user input values changes
   function handleChange(e) {
@@ -101,10 +124,17 @@ function App() {
     <div className="main">
       {loading && !data && <div>chargement</div>}
 
+
+      <select name="filter" id="filter" onChange={(e) => filterData(e)}>
+    <option value="">All</option>
+    <option value="expired">Expired</option>
+    <option value="few-days">Few days left</option>
+</select>
+
       {categories && (
         <FoodInventory
           categories={categories}
-          data={data}
+          data={filteredData}
           requestRefresh={requestRefresh}
         />
       )}
