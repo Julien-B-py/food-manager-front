@@ -41,7 +41,11 @@ const Food = ({ food, onRefresh }) => {
         <i
           className="fas fa-trash-alt action-icon"
           onClick={() => {
-            if (window.confirm("Are you sure you wish to delete this item?")) {
+            if (
+              window.confirm(
+                `Are you sure you wish to delete this item: ${food.name}?`
+              )
+            ) {
               remove(food._id);
             }
           }}

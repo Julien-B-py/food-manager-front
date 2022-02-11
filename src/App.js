@@ -3,20 +3,17 @@ import axios from "axios";
 import moment from "moment";
 
 import CircularProgress from "@mui/material/CircularProgress";
-import MenuItem from "@mui/material/MenuItem";
+
 import Fab from "@mui/material/Fab";
-import AddIcon from "@mui/icons-material/Add";
+
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import CloseIcon from "@mui/icons-material/Close";
-import DeleteIcon from "@mui/icons-material/Delete";
 
+import ActionIcons from "./components/ActionIcons";
 import AddForm from "./components/AddForm";
 import FoodInventory from "./components/FoodInventory";
 import Footer from "./components/Footer";
-import CssTextField from "./components/CssTextField";
-
-import { filters } from "./constants/constants";
 
 function App() {
   // Initialize user inputs with empty name, category and set the date input to current date
@@ -60,9 +57,18 @@ function App() {
   };
 
   const filterData = (e) => {
-    const { value } = e.target;
+    let value;
     let filteredData;
-    setFilter(value);
+
+    // If filter input changed
+    if (e) {
+      value = e.target.value;
+      setFilter(value);
+      // If forced filtering
+    } else {
+      value = filter;
+    }
+
     if (value === "Périmé") {
       filteredData = data.foods.filter((food) => food.remainingDays < 1);
     } else if (value === "Date proche") {
@@ -116,6 +122,11 @@ function App() {
       setCategories([...new Set(filteredData.map((food) => food.category))]);
     }
   }, [filteredData]);
+
+  // Everytime data changes (after adding or deleting an item for example), reapply filter
+  useEffect(() => {
+    data && filterData();
+  }, [data]);
 
   // Handle and update user input values changes
   function handleChange(e) {
@@ -173,42 +184,24 @@ function App() {
       )}
 
       {categories && (
-        <div className="filter">
-          <CssTextField
-            sx={{ width: "20ch" }}
-            name="filter"
-            select
-            label="Filtrer"
-            value={filter}
-            onChange={(e) => filterData(e)}
-          >
-            {filters.map((filter) => (
-              <MenuItem key={filter} value={filter}>
-                {filter}
-              </MenuItem>
-            ))}
-          </CssTextField>
-        </div>
-      )}
-
-      {error && (
-        <>
-        <div className="inventory">
-        </div>
-        <Snackbar open>
-          <Alert severity="error" variant="filled">
-            {error}
-          </Alert>
-        </Snackbar>
-        </>
-      )}
-
-      {categories && (
         <FoodInventory
           categories={categories}
           data={filteredData}
           requestRefresh={requestRefresh}
+          filter={filter}
+          filterData={filterData}
         />
+      )}
+
+      {error && (
+        <>
+          <div className="inventory"></div>
+          <Snackbar open>
+            <Alert severity="error" variant="filled">
+              {error}
+            </Alert>
+          </Snackbar>
+        </>
       )}
 
       <Snackbar
@@ -223,29 +216,11 @@ function App() {
         </Alert>
       </Snackbar>
 
-      <div className="action-icons">
-        <Fab
-          color="primary"
-          aria-label="add"
-          className="delete-all-button"
-          onClick={() => {
-            if (window.confirm("Are you sure you wish to delete all items?")) {
-              deleteAll();
-            }
-          }}
-        >
-          <DeleteIcon />
-        </Fab>
-
-        <Fab
-          color="primary"
-          aria-label="add"
-          className="add-button"
-          onClick={() => setModalVisible(!modalVisible)}
-        >
-          <AddIcon />
-        </Fab>
-      </div>
+      <ActionIcons
+        deleteAll={deleteAll}
+        setModalVisible={setModalVisible}
+        modalVisible={modalVisible}
+      />
 
       {modalVisible && (
         <div className="modal">

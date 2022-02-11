@@ -51,6 +51,10 @@ h5 {
   margin: 10px 0;
 }
 
+.food p {
+  word-break: break-all;
+}
+
 .add-input {
   display: flex;
   flex-direction: column;
@@ -187,7 +191,6 @@ h5 {
 
 .action-icons {
   display: flex;
-  flex-direction: column;
   gap: inherit;
   /* position: absolute; */
   position: fixed;
@@ -230,7 +233,13 @@ h5 {
 }
 
 .filter {
-  margin-top: 2rem;
+  margin-bottom: 0.625rem;
   width: 90%;
   max-width: 450px;
+}
+
+@media only screen and (min-width: 600px) {
+  .action-icons {
+    flex-direction: column;
+  }
 }

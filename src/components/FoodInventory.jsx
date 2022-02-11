@@ -1,11 +1,21 @@
 import FoodCategory from "./FoodCategory";
+import Filter from "./Filter";
 
-const FoodInventory = ({ categories, data, requestRefresh }) => {
+const FoodInventory = ({
+  categories,
+  data,
+  requestRefresh,
+  filter,
+  filterData
+}) => {
   return (
     <div className="inventory">
       <div className="header">
         <h1>Inventaire</h1>
       </div>
+
+      <Filter filter={filter} filterData={filterData} />
+
       {categories.length > 0 ? (
         <div className="food-list">
           {categories.map((category, index) => (
