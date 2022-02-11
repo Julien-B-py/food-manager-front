@@ -2,7 +2,7 @@ import Food from "./Food";
 
 import { useState } from "react";
 
-function FoodCategory({ category, foods, onRefresh }) {
+const FoodCategory = ({ category, foods, onRefresh }) => {
   // Create a new array containing only food items that match current prop category
   const foodFromCategory = foods.filter((food) => food.category === category);
 
@@ -33,6 +33,6 @@ function FoodCategory({ category, foods, onRefresh }) {
       </div>
     </div>
   );
-}
+};
 
 export default FoodCategory;

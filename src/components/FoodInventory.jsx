@@ -1,6 +1,6 @@
 import FoodCategory from "./FoodCategory";
 
-function FoodInventory({ categories, data, requestRefresh }) {
+const FoodInventory = ({ categories, data, requestRefresh }) => {
   return (
     <div className="inventory">
       <div className="header">
@@ -22,6 +22,6 @@ function FoodInventory({ categories, data, requestRefresh }) {
       )}
     </div>
   );
-}
+};
 
 export default FoodInventory;

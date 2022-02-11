@@ -1,6 +1,6 @@
 import axios from "axios";
 
-function Food({ food, onRefresh }) {
+const Food = ({ food, onRefresh }) => {
   const edit = (id) => {
     console.log("edit " + id);
   };
@@ -13,7 +13,7 @@ function Food({ food, onRefresh }) {
     onRefresh();
   };
 
-  function displayDaysLeft(param) {
+  const displayDaysLeft = (param) => {
     if (param > 1) {
       return `Reste ${param} jours`;
     } else if (param > 0) {
@@ -23,7 +23,7 @@ function Food({ food, onRefresh }) {
     } else {
       return "Périmé";
     }
-  }
+  };
 
   return (
     <div className="food">
@@ -49,6 +49,6 @@ function Food({ food, onRefresh }) {
       </div>
     </div>
   );
-}
+};
 
 export default Food;

@@ -11,12 +11,12 @@ import Alert from "@mui/material/Alert";
 import CloseIcon from "@mui/icons-material/Close";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-import AddForm from "./AddForm";
-import FoodInventory from "./FoodInventory";
-import Footer from "./Footer";
-import CssTextField from "./CssTextField";
+import AddForm from "./components/AddForm";
+import FoodInventory from "./components/FoodInventory";
+import Footer from "./components/Footer";
+import CssTextField from "./components/CssTextField";
 
-import { filters } from "../constants/constants";
+import { filters } from "./constants/constants";
 
 function App() {
   // Initialize user inputs with empty name, category and set the date input to current date
@@ -26,6 +26,8 @@ function App() {
     storageLife: -1,
     expDate: moment().format("YYYY-MM-DD")
   };
+
+  const [error, setError] = useState("");
 
   const [successSnackbarVisible, setSuccessSnackbarVisible] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
@@ -63,26 +65,33 @@ function App() {
     setFilter(value);
     if (value === "Périmé") {
       filteredData = data.foods.filter((food) => food.remainingDays < 1);
-      setFilteredData(filteredData);
     } else if (value === "Date proche") {
       filteredData = data.foods.filter(
         (food) => food.remainingDays <= 5 && food.remainingDays >= 1
       );
-
-      setFilteredData(filteredData);
-    } else filteredData = data.foods;
+    } else {
+      filteredData = data.foods;
+    }
     setFilteredData(filteredData);
   };
 
+  // Fetch food list
   useEffect(() => {
     async function fetchData() {
-      let response = await fetch("http://localhost:4000/api/get-list");
-      response = await response.json();
+      try {
+        let response = await axios("http://localhost:4000/api/get-list", {
+          timeout: 1000
+        });
 
-      await setData(response);
-      await setFilteredData(response.foods);
-      setLoading(false);
-      setUpdateNeeded(false);
+        setData(response.data);
+        setFilteredData(response.data.foods);
+
+        setUpdateNeeded(false);
+      } catch (e) {
+        setError(e.message);
+      } finally {
+        setLoading(false);
+      }
     }
 
     if (updateNeeded) {
@@ -91,6 +100,7 @@ function App() {
     }
   }, [updateNeeded]);
 
+  // Disable scrolling when modal visible
   useEffect(() => {
     const body = document.querySelector("body");
     if (modalVisible) {
@@ -100,7 +110,7 @@ function App() {
     }
   }, [modalVisible]);
 
-  // When data are fetched and available, create an array of unique categories from datas.foods array and store it in categories.
+  // When data are fetched and available, create an array of unique categories from datas.foods array and store it in categories hook.
   useEffect(() => {
     if (filteredData) {
       setCategories([...new Set(filteredData.map((food) => food.category))]);
@@ -126,28 +136,28 @@ function App() {
         opened: false
       };
       console.log(food);
-      await axios
-        .post("http://localhost:4000/api/add", food)
-        .then((response) => {
-          console.log(response);
-        });
+      const response = await axios.post("http://localhost:4000/api/add", food);
 
-      // Reset user inputs
+      console.log(response);
 
-      await setSuccessSnackbarVisible(true);
+      // Store food name to display in success message
       setAddedFood(input.name);
+      // Display success message
+      setSuccessSnackbarVisible(true);
+      // Reset user inputs
       setInput(defaultInputs);
       requestRefresh();
     }
   }
 
-  // Delete all entries
+  // Delete all entries from the current list
   const deleteAll = async () => {
     try {
       const response = await axios.delete(
         "http://localhost:4000/api/delete-all"
       );
-      requestRefresh();
+      // requestRefresh();
+      setUpdateNeeded(true);
     } catch (err) {
       console.log(err);
     }
@@ -181,6 +191,18 @@ function App() {
         </div>
       )}
 
+      {error && (
+        <>
+        <div className="inventory">
+        </div>
+        <Snackbar open>
+          <Alert severity="error" variant="filled">
+            {error}
+          </Alert>
+        </Snackbar>
+        </>
+      )}
+
       {categories && (
         <FoodInventory
           categories={categories}
@@ -194,7 +216,6 @@ function App() {
         autoHideDuration={3000}
         onClose={() => {
           setSuccessSnackbarVisible(false);
-          setAddedFood("");
         }}
       >
         <Alert severity="success" variant="filled">

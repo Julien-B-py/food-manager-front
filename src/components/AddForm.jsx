@@ -5,7 +5,7 @@ import CssTextField from "./CssTextField";
 
 import { categories } from "../constants/constants";
 
-function AddForm({ input, handleChange, addFood, closeModal }) {
+const AddForm = ({ input, handleChange, addFood, closeModal }) => {
   return (
     <div className="user-controls">
       <form className="add-input">
@@ -59,6 +59,6 @@ function AddForm({ input, handleChange, addFood, closeModal }) {
       </form>
     </div>
   );
-}
+};
 
 export default AddForm;
