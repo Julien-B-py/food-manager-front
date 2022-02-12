@@ -6,7 +6,10 @@ const FoodInventory = ({
   data,
   requestRefresh,
   filter,
-  filterData
+  filterData,
+  setError,
+  setSuccessSnackbarVisible,
+  setOperation
 }) => {
   return (
     <div className="inventory">
@@ -24,6 +27,9 @@ const FoodInventory = ({
               category={category}
               foods={data}
               onRefresh={requestRefresh}
+              setError={setError}
+              setSuccessSnackbarVisible={setSuccessSnackbarVisible}
+              setOperation={setOperation}
             />
           ))}
         </div>

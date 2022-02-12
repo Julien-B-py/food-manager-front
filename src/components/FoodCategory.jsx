@@ -2,7 +2,14 @@ import Food from "./Food";
 
 import { useState } from "react";
 
-const FoodCategory = ({ category, foods, onRefresh }) => {
+const FoodCategory = ({
+  category,
+  foods,
+  onRefresh,
+  setError,
+  setSuccessSnackbarVisible,
+  setOperation
+}) => {
   // Create a new array containing only food items that match current prop category
   const foodFromCategory = foods.filter((food) => food.category === category);
 
@@ -28,7 +35,14 @@ const FoodCategory = ({ category, foods, onRefresh }) => {
       </div>
       <div className={"foodList " + (visibility ? "" : "hidden")}>
         {foodFromCategory.map((food) => (
-          <Food key={food._id} food={food} onRefresh={onRefresh} />
+          <Food
+            key={food._id}
+            food={food}
+            onRefresh={onRefresh}
+            setError={setError}
+            setSuccessSnackbarVisible={setSuccessSnackbarVisible}
+            setOperation={setOperation}
+          />
         ))}
       </div>
     </div>

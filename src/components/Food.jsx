@@ -1,29 +1,19 @@
-import axios from "axios";
+import { removeFood } from "../api/api";
 
-const Food = ({ food, onRefresh }) => {
+import {displayDaysLeft} from "../utils/utils";
+
+const Food = ({
+  food,
+  onRefresh,
+  setError,
+  setSuccessSnackbarVisible,
+  setOperation
+}) => {
   const edit = (id) => {
     console.log("edit " + id);
   };
 
-  const remove = async (id) => {
-    await axios
-      .delete(`http://localhost:4000/api/delete/${id}`)
-      .then((response) => console.log(response));
 
-    onRefresh();
-  };
-
-  const displayDaysLeft = (param) => {
-    if (param > 1) {
-      return `Reste ${param} jours`;
-    } else if (param > 0) {
-      return `Reste ${param} jour`;
-    } else if (param === 0) {
-      return "Dernier jour";
-    } else {
-      return "Périmé";
-    }
-  };
 
   return (
     <div className="food">
@@ -46,7 +36,15 @@ const Food = ({ food, onRefresh }) => {
                 `Are you sure you wish to delete this item: ${food.name}?`
               )
             ) {
-              remove(food._id);
+              removeFood(food._id).then((response) => {
+                if (response === true) {
+                  setOperation(`${food.name} supprimé avec succès.`);
+                  setSuccessSnackbarVisible(true);
+                  onRefresh();
+                } else {
+                  setError(response);
+                }
+              });
             }
           }}
         ></i>

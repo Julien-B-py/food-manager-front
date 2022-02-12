@@ -29,6 +29,8 @@ function App() {
   const [successSnackbarVisible, setSuccessSnackbarVisible] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
 
+  const [operation, setOperation] = useState("");
+
   // Store current food list data
   const [data, setData] = useState();
 
@@ -153,6 +155,10 @@ function App() {
 
       // Store food name to display in success message
       setAddedFood(input.name);
+
+      //
+
+      setOperation(`${addedFood} ajouté avec succès.`);
       // Display success message
       setSuccessSnackbarVisible(true);
       // Reset user inputs
@@ -190,6 +196,9 @@ function App() {
           requestRefresh={requestRefresh}
           filter={filter}
           filterData={filterData}
+          setError={setError}
+          setSuccessSnackbarVisible={setSuccessSnackbarVisible}
+          setOperation={setOperation}
         />
       )}
 
@@ -212,7 +221,7 @@ function App() {
         }}
       >
         <Alert severity="success" variant="filled">
-          {addedFood} ajouté avec succès.
+          {operation}
         </Alert>
       </Snackbar>
 
