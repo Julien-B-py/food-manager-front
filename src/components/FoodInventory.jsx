@@ -4,12 +4,11 @@ import Filter from "./Filter";
 const FoodInventory = ({
   categories,
   data,
-  requestRefresh,
   filter,
   filterData,
-  setError,
-  setSuccessSnackbarVisible,
-  setOperation
+  setSnackbarVisible,
+  setOperation,
+  setUpdateNeeded
 }) => {
   return (
     <div className="inventory">
@@ -26,10 +25,9 @@ const FoodInventory = ({
               key={index}
               category={category}
               foods={data}
-              onRefresh={requestRefresh}
-              setError={setError}
-              setSuccessSnackbarVisible={setSuccessSnackbarVisible}
+              setSnackbarVisible={setSnackbarVisible}
               setOperation={setOperation}
+              setUpdateNeeded={setUpdateNeeded}
             />
           ))}
         </div>

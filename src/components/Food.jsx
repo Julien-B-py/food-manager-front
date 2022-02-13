@@ -1,19 +1,16 @@
 import { removeFood } from "../api/api";
-
-import {displayDaysLeft} from "../utils/utils";
+import { displayDaysLeft } from "../utils/utils";
 
 const Food = ({
   food,
-  onRefresh,
-  setError,
-  setSuccessSnackbarVisible,
-  setOperation
+
+  setSnackbarVisible,
+  setOperation,
+  setUpdateNeeded
 }) => {
   const edit = (id) => {
     console.log("edit " + id);
   };
-
-
 
   return (
     <div className="food">
@@ -38,12 +35,19 @@ const Food = ({
             ) {
               removeFood(food._id).then((response) => {
                 if (response === true) {
-                  setOperation(`${food.name} supprimé avec succès.`);
-                  setSuccessSnackbarVisible(true);
-                  onRefresh();
+                  setOperation({
+                    desc: `${food.name} supprimé avec succès.`,
+                    result: "success"
+                  });
+
+                  setUpdateNeeded(true);
                 } else {
-                  setError(response);
+                  setOperation({
+                    desc: response,
+                    result: "error"
+                  });
                 }
+                setSnackbarVisible(true);
               });
             }
           }}

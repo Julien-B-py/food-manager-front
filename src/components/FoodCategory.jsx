@@ -1,14 +1,14 @@
-import Food from "./Food";
-
 import { useState } from "react";
+
+import Food from "./Food";
 
 const FoodCategory = ({
   category,
   foods,
-  onRefresh,
-  setError,
-  setSuccessSnackbarVisible,
-  setOperation
+
+  setSnackbarVisible,
+  setOperation,
+  setUpdateNeeded
 }) => {
   // Create a new array containing only food items that match current prop category
   const foodFromCategory = foods.filter((food) => food.category === category);
@@ -38,10 +38,9 @@ const FoodCategory = ({
           <Food
             key={food._id}
             food={food}
-            onRefresh={onRefresh}
-            setError={setError}
-            setSuccessSnackbarVisible={setSuccessSnackbarVisible}
+            setSnackbarVisible={setSnackbarVisible}
             setOperation={setOperation}
+            setUpdateNeeded={setUpdateNeeded}
           />
         ))}
       </div>

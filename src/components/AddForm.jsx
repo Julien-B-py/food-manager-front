@@ -1,11 +1,63 @@
+import moment from "moment";
+
 import Button from "@mui/material/Button";
-import MenuItem from "@mui/material/MenuItem";
 
 import CssTextField from "./CssTextField";
 
-import { categories } from "../constants/constants";
+import { selectCategories, defaultInputs } from "../constants/constants";
+import { addFood } from "../api/api";
 
-const AddForm = ({ input, handleChange, addFood, closeModal }) => {
+const AddForm = ({
+  setModalVisible,
+  handleChange,
+  input,
+  setInput,
+  setOperation,
+  setSnackbarVisible,
+  setUpdateNeeded
+}) => {
+  const addFoodAndHideModal = async (e) => {
+    e.preventDefault();
+
+    if (input.name && input.category) {
+      const foodName = input.name;
+
+      const food = {
+        name: input.name,
+        category: input.category,
+        storageLife: input.storageLife,
+        expDate: moment(input.expDate).format("DD/MM/YYYY"),
+        opened: false
+      };
+
+      addFood(food).then((response) => {
+        if (response === true) {
+          setOperation({
+            desc: `${foodName} ajouté avec succès`,
+            result: "success"
+          });
+          setModalVisible(false);
+
+          setInput(defaultInputs);
+
+          setUpdateNeeded(true);
+        } else {
+          setOperation({
+            desc: response,
+            result: "error"
+          });
+        }
+      });
+    } else {
+      setOperation({
+        desc: "Merci de renseigner l'aliment et la catégorie",
+        result: "error"
+      });
+    }
+
+    setSnackbarVisible(true);
+  };
+
   return (
     <div className="user-controls">
       <form className="add-input">
@@ -18,41 +70,35 @@ const AddForm = ({ input, handleChange, addFood, closeModal }) => {
         />
 
         <CssTextField
-          name="category"
-          select
           label="Catégorie"
-          value={input.category}
+          name="category"
           onChange={(e) => handleChange(e)}
+          select
+          value={input.category}
         >
-          {categories.map((categorie) => (
-            <MenuItem key={categorie} value={categorie}>
-              {categorie}
-            </MenuItem>
-          ))}
+          {selectCategories}
         </CssTextField>
 
         <CssTextField
           label="Durée de conservation"
           name="storageLife"
-          type="number"
           onChange={(e) => handleChange(e)}
+          type="number"
           value={input.storageLife}
         />
         <CssTextField
           label="Date de péremption"
           name="expDate"
-          type="date"
           onChange={(e) => handleChange(e)}
+          type="date"
           value={input.expDate}
         />
 
         <Button
-          variant="contained"
           onClick={(e) => {
-            e.preventDefault();
-            addFood();
-            closeModal();
+            addFoodAndHideModal(e);
           }}
+          variant="contained"
         >
           Ajouter
         </Button>

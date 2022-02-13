@@ -1,7 +1,6 @@
 import MenuItem from "@mui/material/MenuItem";
 
 import CssTextField from "./CssTextField";
-
 import { filters } from "../constants/constants";
 
 const Filter = ({ filter, filterData }) => {

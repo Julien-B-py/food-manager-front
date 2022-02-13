@@ -2,18 +2,40 @@ import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Fab from "@mui/material/Fab";
 
-const ActionIcons = ({ deleteAll, setModalVisible, modalVisible }) => {
+import { deleteAll } from "../api/api";
+
+const ActionIcons = ({
+  modalVisible,
+  setModalVisible,
+  setUpdateNeeded,
+  setOperation,
+  setSnackbarVisible
+}) => {
+  async function clearList() {
+    if (window.confirm("Are you sure you wish to delete all items?")) {
+      const success = await deleteAll();
+
+      if (success === true) {
+        setUpdateNeeded(true);
+        setOperation({
+          desc: "Tous les éléments ont été supprimés avec succès",
+          result: "success"
+        });
+      } else {
+        setOperation({ desc: success, result: "error" });
+      }
+
+      setSnackbarVisible(true);
+    }
+  }
+
   return (
     <div className="action-icons">
       <Fab
         color="primary"
         aria-label="add"
         className="delete-all-button"
-        onClick={() => {
-          if (window.confirm("Are you sure you wish to delete all items?")) {
-            deleteAll();
-          }
-        }}
+        onClick={clearList}
       >
         <DeleteIcon />
       </Fab>
