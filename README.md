@@ -1,3 +1,11 @@
+# Food Manager
+
+This project was about building a **React app** allowing the user to instantaneously visualise all stored food items and helping to waste less.
+
+![alt text](https://i.imgur.com/WLQHP1l.png)
+
+Deployed and hosted version available here: [https://julien-b-py.github.io/food-manager-front](https://julien-b-py.github.io/food-manager-front)
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
