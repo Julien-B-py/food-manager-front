@@ -44,6 +44,7 @@ h5 {
   background: #112D4E;
   padding: 3rem;
   border-radius: 5px;
+  border:solid 2px rgb(126,175,215);
 }
 
 .food {

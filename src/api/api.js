@@ -1,10 +1,12 @@
 import axios from "axios";
 
+const domain = "https://sleepy-reef-78196.herokuapp.com";
+
 // Remove specific entry from the current list
 export const removeFood = async (foodId) => {
   try {
     const response = await axios.delete(
-      `http://localhost:4000/api/delete/${foodId}`
+      `${domain}/api/delete/${foodId}`
     );
     return response.data.response;
   } catch (error) {
@@ -15,7 +17,7 @@ export const removeFood = async (foodId) => {
 // Delete all entries from the current list
 export const deleteAll = async () => {
   try {
-    const response = await axios.delete("http://localhost:4000/api/delete-all");
+    const response = await axios.delete(`${domain}/api/delete-all`);
     return response.data.response;
   } catch (error) {
     return error.message;
@@ -25,7 +27,7 @@ export const deleteAll = async () => {
 // Add a food entry to the current list
 export const addFood = async (food) => {
   try {
-    const response = await axios.post("http://localhost:4000/api/add", food);
+    const response = await axios.post(`${domain}/api/add`, food);
     return response.data.response;
   } catch (error) {
     return error.message;
@@ -34,7 +36,7 @@ export const addFood = async (food) => {
 
 export const fetchData = async () => {
   try {
-    const response = await axios("http://localhost:4000/api/get-list", {
+    const response = await axios(`${domain}/api/get-list`, {
       timeout: 1000
     });
     return response.data;

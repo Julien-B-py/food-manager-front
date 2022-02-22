@@ -6,6 +6,8 @@ const FoodInventory = ({
   data,
   filter,
   filterData,
+  setEdit,
+  setInput,
   setSnackbarVisible,
   setOperation,
   setUpdateNeeded
@@ -25,6 +27,8 @@ const FoodInventory = ({
               key={index}
               category={category}
               foods={data}
+                    setEdit={setEdit}
+                    setInput={setInput}
               setSnackbarVisible={setSnackbarVisible}
               setOperation={setOperation}
               setUpdateNeeded={setUpdateNeeded}

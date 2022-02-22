@@ -11,6 +11,7 @@ import { defaultInputs } from "./constants/constants";
 
 import ActionIcons from "./components/ActionIcons";
 import AddForm from "./components/AddForm";
+import EditForm from "./components/EditForm";
 import FoodInventory from "./components/FoodInventory";
 import Footer from "./components/Footer";
 
@@ -26,6 +27,8 @@ function App() {
   const [filteredData, setFilteredData] = useState([]);
 
   const [filter, setFilter] = useState("Tout");
+
+  const [edit, setEdit] = useState({edit:false, foodId:""});
 
   // Store changes on user inputs
   const [input, setInput] = useState(defaultInputs);
@@ -130,6 +133,8 @@ function App() {
           data={filteredData}
           filter={filter}
           filterData={filterData}
+          setEdit={setEdit}
+          setInput={setInput}
           setSnackbarVisible={setSnackbarVisible}
           setOperation={setOperation}
           setUpdateNeeded={setUpdateNeeded}
@@ -177,6 +182,25 @@ function App() {
           />
         </div>
       )}
+
+{edit.edit &&      <div className="modal">
+        <Fab
+          color="primary"
+          aria-label="add"
+          className="close-modal"
+          onClick={() => setEdit(false)}
+        >
+          <CloseIcon />
+        </Fab>
+        <EditForm
+          edit={edit}
+          handleChange={handleChange}
+          input={input}
+          setInput={setInput}
+        />
+      </div>}
+
+
 
       <Footer />
     </div>
