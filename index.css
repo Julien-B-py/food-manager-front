@@ -1,0 +1,246 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  background-color: #112D4E;
+  background-image: radial-gradient(circle, #112d4e, #0a284d, #04224b, #011d49, #001746);
+  background-size: 300% 300%;
+  background-position: 50%;
+  font-family: 'Roboto', sans-serif;
+}
+
+footer {
+  margin-bottom: 50px;
+  text-align: center;
+}
+
+h1 {
+  font-size: 2.5rem;
+}
+
+h5 {
+  font-size: 1.25rem;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  position: relative;
+}
+
+.user-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+  background: #112D4E;
+  padding: 3rem;
+  border-radius: 5px;
+  border:solid 2px rgb(126,175,215);
+}
+
+.food {
+  display: flex;
+  margin: 10px 0;
+}
+
+.food p {
+  word-break: break-all;
+}
+
+.add-input {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.add-input span {
+  font-size: 1.5rem;
+  color: #fff;
+  margin-bottom: 1rem;
+}
+
+.food-list {
+  margin: 0 auto 50px;
+  background: #DBE2EF;
+  border-radius: 5px;
+  box-shadow: 5px 5px 15px -5px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+}
+
+.empty-list {
+  margin: 0 auto 50px;
+  background: #DBE2EF;
+  border-radius: 5px;
+  box-shadow: 5px 5px 15px -5px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.category-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  background-color: #3F72AF;
+  color: #F9F7F7;
+  border-bottom: 1px solid rgba(219, 226, 239, .3);
+}
+
+.category-header:hover {
+  cursor: pointer;
+}
+
+.category {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.foodList {
+  padding: 0 20px;
+  transition: max-height 0.2s ease-out;
+}
+
+.food>* {
+  flex: 1 1 0px;
+  align-items: center;
+  display: flex;
+}
+
+.food-icons {
+  justify-content: end;
+  flex: 0 0 5em;
+  gap: 0.3rem;
+}
+
+.food-center {
+  justify-content: center;
+}
+
+.category-end {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.inventory {
+  width: 90%;
+  max-width: 450px;
+  flex: 1;
+}
+
+.header {
+  margin: 50px auto;
+  background: #F9F7F7;
+  border-radius: 5px;
+  box-shadow: 5px 5px 15px -5px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  color: #112D4E;
+  padding: 10px;
+}
+
+.action-icon {
+  text-decoration: none;
+  color: #3F72AF;
+}
+
+.action-icon:hover {
+  cursor: pointer;
+}
+
+.hidden {
+  height: 0;
+}
+
+.dropdown-icon {
+  transition: transform 0.2s ease-out;
+}
+
+.collapsed {
+  transform: rotate(-180deg);
+}
+
+.footer-text {
+  color: #DBE2EF;
+}
+
+.footer-link {
+  text-decoration: none;
+  color: #DBE2EF;
+}
+
+.footer-link:hover {
+  color: #F9F7F7;
+}
+
+.date {
+  padding: 5px 10px;
+}
+
+.action-icons {
+  display: flex;
+  gap: inherit;
+  /* position: absolute; */
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+}
+
+.MuiButtonBase-root.add-button {}
+
+.MuiButtonBase-root.delete-all-button {}
+
+.MuiButtonBase-root.close-modal {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  transform: translateZ(0);
+  background-color: rgba(0, 0, 0, 0.95);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loading {
+  flex: 1;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2rem;
+  color: #fff;
+}
+
+.filter {
+  margin-bottom: 0.625rem;
+  width: 90%;
+  max-width: 450px;
+}
+
+@media only screen and (min-width: 600px) {
+  .action-icons {
+    flex-direction: column;
+  }
+}
