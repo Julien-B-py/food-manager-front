@@ -4,7 +4,7 @@ This project was about building a **React app** allowing the user to instantaneo
 
 ![alt text](https://i.imgur.com/WLQHP1l.png)
 
-Deployed and hosted version available here: [https://julien-b-py.github.io/food-manager-front](https://julien-b-py.github.io/food-manager-front)
+Deployed and hosted version available here: [https://sad-jepsen-81fb89.netlify.app/](https://sad-jepsen-81fb89.netlify.app/)
 
 # Getting Started with Create React App
 
