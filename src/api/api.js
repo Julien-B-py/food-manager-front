@@ -35,6 +35,18 @@ export const addFood = async (food) => {
   }
 };
 
+
+// Edit a food entry from the current list
+export const editFood = async (foodId, food) => {
+  try {
+    const response = await axios.patch(`${domain}/api/food/${foodId}`, food);
+    return response.data.message;
+  } catch (error) {
+    return error.message;
+  }
+};
+
+
 export const fetchData = async () => {
   try {
     const response = await axios(`${domain}/api/get-list`, {

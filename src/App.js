@@ -201,7 +201,10 @@ function App() {
             edit={edit}
             handleChange={handleChange}
             input={input}
+            setEdit={setEdit}
             setInput={setInput}
+            setOperation={setOperation}
+            setUpdateNeeded={setUpdateNeeded}
           />
         </div>
       )}
