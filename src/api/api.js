@@ -1,13 +1,14 @@
 import axios from "axios";
 
+// Online
 const domain = "https://sleepy-reef-78196.herokuapp.com";
+// Local
+// const domain = "http://localhost:5000";
 
 // Remove specific entry from the current list
 export const removeFood = async (foodId) => {
   try {
-    const response = await axios.delete(
-      `${domain}/api/delete/${foodId}`
-    );
+    const response = await axios.delete(`${domain}/api/delete/${foodId}`);
     return response.data.response;
   } catch (error) {
     return error.message;
@@ -37,7 +38,7 @@ export const addFood = async (food) => {
 export const fetchData = async () => {
   try {
     const response = await axios(`${domain}/api/get-list`, {
-      timeout: 1000
+      timeout: 10000
     });
     return response.data;
   } catch (error) {

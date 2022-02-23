@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import moment from "moment";
 
 import Button from "@mui/material/Button";
@@ -27,13 +28,20 @@ const AddForm = ({
         category: input.category,
         storageLife: input.storageLife,
         expDate: moment(input.expDate).format("DD/MM/YYYY"),
-        opened: false
+        opened: false,
+        quantity: input.quantity
       };
+
+      const qty = input.quantity;
 
       addFood(food).then((response) => {
         if (response === true) {
+          const operationDesc =
+            qty > 1
+              ? `${qty} ${foodName} ajoutés avec succès`
+              : `${foodName} ajouté avec succès`;
           setOperation({
-            desc: `${foodName} ajouté avec succès`,
+            desc: operationDesc,
             result: "success"
           });
           setModalVisible(false);
@@ -54,9 +62,11 @@ const AddForm = ({
         result: "error"
       });
     }
-
-    setSnackbarVisible(true);
   };
+
+  useEffect(() => {
+    setInput(defaultInputs);
+  }, []);
 
   return (
     <div className="user-controls">
@@ -92,6 +102,14 @@ const AddForm = ({
           onChange={(e) => handleChange(e)}
           type="date"
           value={input.expDate}
+        />
+        <CssTextField
+          label="Quantité"
+          name="quantity"
+          onChange={(e) => handleChange(e)}
+          type="number"
+          value={input.quantity}
+          InputProps={{ inputProps: { min: 1 } }}
         />
 
         <Button

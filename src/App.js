@@ -28,7 +28,7 @@ function App() {
 
   const [filter, setFilter] = useState("Tout");
 
-  const [edit, setEdit] = useState({edit:false, foodId:""});
+  const [edit, setEdit] = useState({ edit: false, foodId: "" });
 
   // Store changes on user inputs
   const [input, setInput] = useState(defaultInputs);
@@ -87,6 +87,10 @@ function App() {
       }, 300);
     }
   }, [updateNeeded]);
+
+  useEffect(() => {
+    operation?.desc && setSnackbarVisible(true);
+  }, [operation]);
 
   // Disable scrolling when modal visible
   useEffect(() => {
@@ -183,24 +187,24 @@ function App() {
         </div>
       )}
 
-{edit.edit &&      <div className="modal">
-        <Fab
-          color="primary"
-          aria-label="add"
-          className="close-modal"
-          onClick={() => setEdit(false)}
-        >
-          <CloseIcon />
-        </Fab>
-        <EditForm
-          edit={edit}
-          handleChange={handleChange}
-          input={input}
-          setInput={setInput}
-        />
-      </div>}
-
-
+      {edit.edit && (
+        <div className="modal">
+          <Fab
+            color="primary"
+            aria-label="add"
+            className="close-modal"
+            onClick={() => setEdit(false)}
+          >
+            <CloseIcon />
+          </Fab>
+          <EditForm
+            edit={edit}
+            handleChange={handleChange}
+            input={input}
+            setInput={setInput}
+          />
+        </div>
+      )}
 
       <Footer />
     </div>

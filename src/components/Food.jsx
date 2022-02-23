@@ -5,24 +5,23 @@ import moment from "moment";
 
 const Food = ({
   food,
-setEdit,
-setInput,
+  setEdit,
+  setInput,
   setSnackbarVisible,
   setOperation,
   setUpdateNeeded
 }) => {
   const edit = (foodItem) => {
+    console.log(foodItem);
 
-    console.log(foodItem)
-
-    setInput({  name: foodItem.name,
+    setInput({
+      name: foodItem.name,
       category: foodItem.category,
       storageLife: foodItem.storageLife,
-      expDate: moment(foodItem.expDate, "DD/MM/YYYY").format("YYYY-MM-DD")})
+      expDate: moment(foodItem.expDate, "DD/MM/YYYY").format("YYYY-MM-DD")
+    });
 
-          setEdit({edit:true, food:foodItem})
-
-
+    setEdit({ edit: true, food: foodItem });
   };
 
   return (
@@ -34,10 +33,7 @@ setInput,
         </p>
       </div>
       <div className="food-icons">
-        <i
-          className="fas fa-edit action-icon"
-          onClick={() => edit(food)}
-        ></i>
+        <i className="fas fa-edit action-icon" onClick={() => edit(food)}></i>
         <i
           className="fas fa-trash-alt action-icon"
           onClick={() => {

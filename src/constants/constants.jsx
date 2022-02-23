@@ -8,9 +8,9 @@ const categories = [
   "Fruits",
   "Légumes",
   "Plats préparés",
+  "Produits laitiers",
   "Sucré",
-  "Viandes",
-  "Yaourts"
+  "Viandes"
 ];
 
 // Exports an array containing categories from above to be used in AddForm component.
@@ -27,5 +27,6 @@ export const defaultInputs = {
   name: "",
   category: "",
   storageLife: -1,
-  expDate: moment().format("YYYY-MM-DD")
+  expDate: moment().format("YYYY-MM-DD"),
+  quantity: 1
 };

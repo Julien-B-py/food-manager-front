@@ -5,8 +5,8 @@ import Food from "./Food";
 const FoodCategory = ({
   category,
   foods,
-setEdit,
-setInput,
+  setEdit,
+  setInput,
   setSnackbarVisible,
   setOperation,
   setUpdateNeeded
@@ -39,8 +39,8 @@ setInput,
           <Food
             key={food._id}
             food={food}
-                  setEdit={setEdit}
-                  setInput={setInput}
+            setEdit={setEdit}
+            setInput={setInput}
             setSnackbarVisible={setSnackbarVisible}
             setOperation={setOperation}
             setUpdateNeeded={setUpdateNeeded}
