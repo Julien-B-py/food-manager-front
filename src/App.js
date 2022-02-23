@@ -64,29 +64,42 @@ function App() {
     setFilteredData(filteredData);
   };
 
-  // Fetch food list
+
   useEffect(() => {
     if (updateNeeded) {
       setLoading(true);
 
-      // Added 300ms delay to fix data not being updated after addind a single food element
-      setTimeout(function () {
-        fetchData().then((data) => {
-          if (typeof data === "string") {
-            setOperation({
-              desc: data,
-              result: "error"
-            });
-            setSnackbarVisible(true);
-          } else {
-            setData(data);
-            setUpdateNeeded(false);
-          }
-          setLoading(false);
-        });
-      }, 300);
+
     }
   }, [updateNeeded]);
+
+
+
+
+
+
+useEffect(() => {
+
+  if (loading) {
+
+      fetchData().then((data) => {
+        if (typeof data === "string") {
+          setOperation({
+            desc: data,
+            result: "error"
+          });
+          setSnackbarVisible(true);
+        } else {
+          setData(data);
+          setUpdateNeeded(false);
+        }
+        setLoading(false);
+      });
+
+    }
+
+}, [loading])
+
 
   useEffect(() => {
     operation?.desc && setSnackbarVisible(true);
