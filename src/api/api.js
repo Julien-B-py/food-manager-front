@@ -45,6 +45,8 @@ export const editFood = async (foodId, food) => {
   }
 };
 
+
+
 // Get the current list containing all food items
 export const fetchData = async () => {
   try {

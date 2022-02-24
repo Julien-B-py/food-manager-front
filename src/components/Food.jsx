@@ -1,5 +1,6 @@
-import { removeFood } from "../api/api";
+import { editFood, removeFood } from "../api/api";
 import { displayDaysLeft } from "../utils/utils";
+
 
 import moment from "moment";
 
@@ -11,18 +12,45 @@ const Food = ({
   setOperation,
   setUpdateNeeded
 }) => {
+
+  // Manual food edit
   const edit = (foodItem) => {
-    console.log(foodItem);
+
+    console.log(foodItem.openedDate)
 
     setInput({
       name: foodItem.name,
       category: foodItem.category,
       storageLife: foodItem.storageLife,
-      expDate: moment(foodItem.expDate, "DD/MM/YYYY").format("YYYY-MM-DD")
+      expDate: moment(foodItem.expDate, "DD/MM/YYYY").format("YYYY-MM-DD"),
+      opened: foodItem.opened,
+      openedDate: moment(foodItem.openedDate, "DD/MM/YYYY").format("YYYY-MM-DD"),
     });
 
     setEdit({ edit: true, food: foodItem });
   };
+
+  // Quick open food
+  const markAsOpen =  () => {
+
+    const update = {
+      opened: true,
+      openOnly:true
+    };
+
+    // If operation is successful, clear edit hook and display feedback to user
+    editFood(food._id, update).then((response) => {
+      if (response === "Success") {
+        setOperation({
+          desc: `${food.name} modifié avec succès.`,
+          result: "success"
+        });
+        setUpdateNeeded(true);
+      }
+    });
+
+
+  }
 
   return (
     <div className="food">
@@ -33,6 +61,7 @@ const Food = ({
         </p>
       </div>
       <div className="food-icons">
+      {!food.opened && <i className="fa-solid fa-box-open action-icon" onClick={() => markAsOpen()}></i>}
         <i className="fas fa-edit action-icon" onClick={() => edit(food)}></i>
         <i
           className="fas fa-trash-alt action-icon"

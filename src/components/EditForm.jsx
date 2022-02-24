@@ -1,6 +1,7 @@
 import moment from "moment";
 
 import Button from "@mui/material/Button";
+import MenuItem from "@mui/material/MenuItem";
 
 import CssTextField from "./CssTextField";
 
@@ -20,12 +21,18 @@ const EditForm = ({
   // Submit current modifications to the database to save update
   const submitFoodModif = async (e) => {
     e.preventDefault();
+
     const food = {
       name: input.name,
       category: input.category,
       storageLife: input.storageLife,
-      expDate: moment(input.expDate).format("DD/MM/YYYY")
+      expDate: moment(input.expDate).format("DD/MM/YYYY"),
+      opened: input.opened,
     };
+
+    if (food.opened) {
+       food.openedDate = input.openedDate
+    }
 
     const editedFood = edit.food.name;
 
@@ -77,6 +84,27 @@ const EditForm = ({
           type="date"
           value={input.expDate}
         />
+
+        <CssTextField
+          label="Cuisiné/entamé"
+          name="opened"
+          onChange={(e) => handleChange(e)}
+          select
+          value={input.opened}
+        >
+        <MenuItem  value={false}>Non</MenuItem>
+        <MenuItem  value={true}>Oui</MenuItem>
+        </CssTextField>
+
+
+{input.opened &&         <CssTextField
+          label="Date d'ouverture/cuisson"
+          name="openedDate"
+          onChange={(e) => handleChange(e)}
+          type="date"
+          value={input.openedDate}
+        />}
+
 
         <Button onClick={(e) => submitFoodModif(e)} variant="contained">
           Valider

@@ -28,5 +28,6 @@ export const defaultInputs = {
   category: "",
   storageLife: -1,
   expDate: moment().format("YYYY-MM-DD"),
-  quantity: 1
+  quantity: 1,
+  opened:false,
 };
