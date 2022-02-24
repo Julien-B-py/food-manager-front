@@ -1,9 +1,9 @@
 import axios from "axios";
 
 // Online
-const domain = "https://sleepy-reef-78196.herokuapp.com";
+// const domain = "https://sleepy-reef-78196.herokuapp.com";
 // Local
-// const domain = "http://localhost:5000";
+const domain = "http://localhost:5000";
 
 // Remove specific entry from the current list
 export const removeFood = async (foodId) => {

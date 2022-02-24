@@ -1,7 +1,6 @@
 import { editFood, removeFood } from "../api/api";
 import { displayDaysLeft } from "../utils/utils";
 
-
 import moment from "moment";
 
 const Food = ({
@@ -16,15 +15,21 @@ const Food = ({
   // Manual food edit
   const edit = (foodItem) => {
 
-    console.log(foodItem.openedDate)
+let date;
+if (foodItem.openedDate) {
+ date = moment(foodItem.openedDate, "DD/MM/YYYY").format("YYYY-MM-DD")
+} else {
+   date = moment().format("YYYY-MM-DD")
+}
 
+  //
     setInput({
       name: foodItem.name,
       category: foodItem.category,
       storageLife: foodItem.storageLife,
       expDate: moment(foodItem.expDate, "DD/MM/YYYY").format("YYYY-MM-DD"),
       opened: foodItem.opened,
-      openedDate: moment(foodItem.openedDate, "DD/MM/YYYY").format("YYYY-MM-DD"),
+      openedDate: date
     });
 
     setEdit({ edit: true, food: foodItem });
