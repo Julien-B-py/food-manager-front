@@ -7,7 +7,6 @@ const FoodCategory = ({
   foods,
   setEdit,
   setInput,
-  setSnackbarVisible,
   setOperation,
   setLoading
 }) => {
@@ -41,7 +40,6 @@ const FoodCategory = ({
             food={food}
             setEdit={setEdit}
             setInput={setInput}
-            setSnackbarVisible={setSnackbarVisible}
             setOperation={setOperation}
             setLoading={setLoading}
           />

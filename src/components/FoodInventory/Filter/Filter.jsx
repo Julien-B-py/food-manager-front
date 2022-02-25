@@ -1,7 +1,7 @@
 import MenuItem from "@mui/material/MenuItem";
 
 import CssTextField from "#components/shared/CssTextField";
-import { filters } from "#constants/constants";
+import { filterOptions } from "#constants/constants";
 
 const Filter = ({ filter, filterData }) => {
   return (
@@ -14,9 +14,9 @@ const Filter = ({ filter, filterData }) => {
         value={filter}
         onChange={(e) => filterData(e)}
       >
-        {filters.map((filter) => (
-          <MenuItem key={filter} value={filter}>
-            {filter}
+        {filterOptions.map((filterOption) => (
+          <MenuItem key={filterOption} value={filterOption}>
+            {filterOption}
           </MenuItem>
         ))}
       </CssTextField>

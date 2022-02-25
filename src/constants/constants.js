@@ -1,6 +1,5 @@
-import moment from "moment";
-
 import MenuItem from "@mui/material/MenuItem";
+import moment from "moment";
 
 // Array containing all possible categories the user can choose from to add a new food item.
 const categories = [
@@ -22,7 +21,7 @@ export const selectCategories = categories.map((categorie) => (
 ));
 
 // Array containing all possible filter options
-export const filters = ["Tout", "Date proche", "Périmé"];
+export const filterOptions = ["Tout", "Date proche", "Périmé"];
 
 // Initialize user inputs with empty name, category and set the date input to current date
 export const defaultInputs = {

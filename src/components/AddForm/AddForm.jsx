@@ -1,12 +1,11 @@
 import { useEffect } from "react";
-import moment from "moment";
 
 import Button from "@mui/material/Button";
+import moment from "moment";
 
-import CssTextField from "#components/shared/CssTextField";
-
-import { selectCategories, defaultInputs } from "#constants/constants";
 import { addFood } from "#api/api";
+import CssTextField from "#components/shared/CssTextField";
+import { selectCategories, defaultInputs } from "#constants/constants";
 
 const AddForm = ({
   setModalVisible,
@@ -14,7 +13,6 @@ const AddForm = ({
   input,
   setInput,
   setOperation,
-  setSnackbarVisible,
   setLoading
 }) => {
   const addFoodAndHideModal = async (e) => {

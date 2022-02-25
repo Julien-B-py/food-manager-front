@@ -1,14 +1,13 @@
 import { useState, useEffect } from "react";
 
+import CloseIcon from "@mui/icons-material/Close";
+import Alert from "@mui/material/Alert";
 import CircularProgress from "@mui/material/CircularProgress";
 import Fab from "@mui/material/Fab";
 import Snackbar from "@mui/material/Snackbar";
-import Alert from "@mui/material/Alert";
-import CloseIcon from "@mui/icons-material/Close";
 
 import { fetchData } from "#api/api";
 import { defaultInputs } from "#constants/constants";
-
 import ActionIcons from "#components/ActionIcons";
 import AddForm from "#components/AddForm";
 import EditForm from "#components/EditForm";
@@ -16,28 +15,25 @@ import FoodInventory from "#components/FoodInventory";
 import Footer from "#components/Footer";
 
 const App = () => {
-
   // Store current food list data
   const [data, setData] = useState({});
-
+  // Determine if snackbar is visible
   const [snackbarVisible, setSnackbarVisible] = useState(false);
+  // Determine if modal is visible
   const [modalVisible, setModalVisible] = useState(false);
-
+  // Determine what operation was performed and if it was successful or not
   const [operation, setOperation] = useState({ result: "info", desc: "" });
-
-
 
   const [filteredData, setFilteredData] = useState([]);
 
   const [filter, setFilter] = useState("Tout");
 
-  const [edit, setEdit] = useState({ edit: false, foodId: "" });
+  const [edit, setEdit] = useState({ enabled: false, foodId: "" });
 
   // Store changes on user inputs
   const [input, setInput] = useState(defaultInputs);
 
   const [loading, setLoading] = useState(true);
-
 
   // Store uniques categories
   const [categories, setCategories] = useState([]);
@@ -67,8 +63,7 @@ const App = () => {
     setFilteredData(filteredData);
   };
 
-
-
+  // Fetch data when loading is true
   useEffect(() => {
     if (loading) {
       fetchData().then((data) => {
@@ -77,7 +72,6 @@ const App = () => {
             desc: data,
             result: "error"
           });
-          setSnackbarVisible(true);
         } else {
           setData(data);
         }
@@ -135,7 +129,6 @@ const App = () => {
           filterData={filterData}
           setEdit={setEdit}
           setInput={setInput}
-          setSnackbarVisible={setSnackbarVisible}
           setOperation={setOperation}
           setLoading={setLoading}
         />
@@ -154,11 +147,9 @@ const App = () => {
       </Snackbar>
 
       <ActionIcons
-        modalVisible={modalVisible}
-        setModalVisible={setModalVisible}
         setLoading={setLoading}
+        setModalVisible={setModalVisible}
         setOperation={setOperation}
-        setSnackbarVisible={setSnackbarVisible}
       />
 
       {modalVisible && (
@@ -177,13 +168,12 @@ const App = () => {
             input={input}
             setInput={setInput}
             setOperation={setOperation}
-            setSnackbarVisible={setSnackbarVisible}
             setLoading={setLoading}
           />
         </div>
       )}
 
-      {edit.edit && (
+      {edit.enabled && (
         <div className="modal">
           <Fab
             color="primary"
@@ -198,7 +188,6 @@ const App = () => {
             handleChange={handleChange}
             input={input}
             setEdit={setEdit}
-            setInput={setInput}
             setOperation={setOperation}
             setLoading={setLoading}
           />
@@ -208,6 +197,6 @@ const App = () => {
       <Footer />
     </div>
   );
-}
+};
 
 export default App;

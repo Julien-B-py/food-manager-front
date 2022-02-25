@@ -1,13 +1,12 @@
-import moment from "moment";
 import { useEffect } from "react";
 
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
+import moment from "moment";
 
-import CssTextField from "#components/shared/CssTextField";
-
-import { selectCategories } from "#constants/constants";
 import { editFood } from "#api/api";
+import CssTextField from "#components/shared/CssTextField";
+import { selectCategories } from "#constants/constants";
 
 const EditForm = ({
   edit,
@@ -38,7 +37,7 @@ const EditForm = ({
     // If operation is successful, clear edit hook and display feedback to user
     editFood(edit.food._id, food).then((response) => {
       if (response === "Success") {
-        setEdit({ edit: false, foodId: "" });
+        setEdit({ enabled: false, foodId: "" });
         setOperation({
           desc: `${editedFood} modifié avec succès.`,
           result: "success"

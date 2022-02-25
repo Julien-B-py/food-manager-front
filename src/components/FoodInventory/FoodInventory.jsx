@@ -1,5 +1,5 @@
-import FoodCategory from "./FoodCategory";
 import Filter from "./Filter";
+import FoodCategory from "./FoodCategory";
 
 const FoodInventory = ({
   categories,
@@ -8,7 +8,6 @@ const FoodInventory = ({
   filterData,
   setEdit,
   setInput,
-  setSnackbarVisible,
   setOperation,
   setLoading
 }) => {
@@ -29,7 +28,6 @@ const FoodInventory = ({
               foods={data}
               setEdit={setEdit}
               setInput={setInput}
-              setSnackbarVisible={setSnackbarVisible}
               setOperation={setOperation}
               setLoading={setLoading}
             />
