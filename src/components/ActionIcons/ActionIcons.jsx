@@ -9,10 +9,14 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Fab from "@mui/material/Fab";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 import { deleteAll } from "#api/api";
+import CustomTooltip from "#components/shared/CustomTooltip";
 
 const ActionIcons = ({ setLoading, setModalVisible, setOperation }) => {
+  const desktop = useMediaQuery("(min-width:600px)", { noSsr: true });
+
   // Handle dialog visibility
   const [dialogVisible, setDialogVisible] = useState(false);
   // Hide dialog
@@ -37,23 +41,31 @@ const ActionIcons = ({ setLoading, setModalVisible, setOperation }) => {
 
   return (
     <div className="action-icons">
-      <Fab
-        color="primary"
-        aria-label="add"
-        className="delete-all-button"
-        onClick={() => setDialogVisible(true)}
+      <CustomTooltip
+        title="Tout supprimer"
+        arrow
+        placement={desktop ? "left" : "top"}
       >
-        <DeleteIcon />
-      </Fab>
+        <Fab
+          color="primary"
+          aria-label="add"
+          className="delete-all-button"
+          onClick={() => setDialogVisible(true)}
+        >
+          <DeleteIcon />
+        </Fab>
+      </CustomTooltip>
 
-      <Fab
-        color="primary"
-        aria-label="add"
-        className="add-button"
-        onClick={() => setModalVisible(true)}
-      >
-        <AddIcon />
-      </Fab>
+      <CustomTooltip title="Ajouter" arrow placement={desktop ? "left" : "top"}>
+        <Fab
+          color="primary"
+          aria-label="add"
+          className="add-button"
+          onClick={() => setModalVisible(true)}
+        >
+          <AddIcon />
+        </Fab>
+      </CustomTooltip>
 
       <Dialog
         open={dialogVisible}

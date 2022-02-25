@@ -17,7 +17,7 @@ const AddForm = ({
 }) => {
   const addFoodAndHideModal = async (e) => {
     e.preventDefault();
-
+    // If name and category are set
     if (input.name && input.category) {
       const foodName = input.name;
 
@@ -33,6 +33,7 @@ const AddForm = ({
       const qty = input.quantity;
 
       addFood(food).then((response) => {
+        // If successfully added
         if (response === true) {
           const operationDesc =
             qty > 1
@@ -47,19 +48,21 @@ const AddForm = ({
           setInput(defaultInputs);
 
           setLoading(true);
-        } else {
-          setOperation({
-            desc: response,
-            result: "error"
-          });
+          return;
         }
+        // If error
+        setOperation({
+          desc: response,
+          result: "error"
+        });
       });
-    } else {
-      setOperation({
-        desc: "Merci de renseigner l'aliment et la catégorie",
-        result: "error"
-      });
+      return;
     }
+    // If an input is missing
+    setOperation({
+      desc: "Merci de renseigner l'aliment et la catégorie",
+      result: "error"
+    });
   };
 
   useEffect(() => {

@@ -9,6 +9,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import moment from "moment";
 
 import { editFood, removeFood } from "#api/api";
+import CustomTooltip from "#components/shared/CustomTooltip";
 import { displayDaysLeft } from "#utils/utils";
 
 const Food = ({ food, setEdit, setInput, setOperation, setLoading }) => {
@@ -90,16 +91,22 @@ const Food = ({ food, setEdit, setInput, setOperation, setLoading }) => {
       </div>
       <div className="food-icons">
         {!food.opened && (
-          <i
-            className="fa-solid fa-box-open action-icon"
-            onClick={markAsOpen}
-          ></i>
+          <CustomTooltip title="Marquer comme entamé" arrow placement="top">
+            <i
+              className="fa-solid fa-box-open action-icon"
+              onClick={markAsOpen}
+            ></i>
+          </CustomTooltip>
         )}
-        <i className="fas fa-edit action-icon" onClick={edit}></i>
-        <i
-          className="fas fa-trash-alt action-icon"
-          onClick={() => setDialogVisible(true)}
-        ></i>
+        <CustomTooltip title="Modifier" arrow placement="top">
+          <i className="fas fa-edit action-icon" onClick={edit}></i>
+        </CustomTooltip>
+        <CustomTooltip title="Supprimer" arrow placement="top">
+          <i
+            className="fas fa-trash-alt action-icon"
+            onClick={() => setDialogVisible(true)}
+          ></i>
+        </CustomTooltip>
       </div>
 
       <Dialog
