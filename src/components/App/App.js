@@ -6,23 +6,26 @@ import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import CloseIcon from "@mui/icons-material/Close";
 
-import { fetchData } from "./api/api";
-import { defaultInputs } from "./constants/constants";
+import { fetchData } from "#api/api";
+import { defaultInputs } from "#constants/constants";
 
-import ActionIcons from "./components/ActionIcons";
-import AddForm from "./components/AddForm";
-import EditForm from "./components/EditForm";
-import FoodInventory from "./components/FoodInventory";
-import Footer from "./components/Footer";
+import ActionIcons from "#components/ActionIcons";
+import AddForm from "#components/AddForm";
+import EditForm from "#components/EditForm";
+import FoodInventory from "#components/FoodInventory";
+import Footer from "#components/Footer";
 
-function App() {
+const App = () => {
+
+  // Store current food list data
+  const [data, setData] = useState({});
+
   const [snackbarVisible, setSnackbarVisible] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
 
   const [operation, setOperation] = useState({ result: "info", desc: "" });
 
-  // Store current food list data
-  const [data, setData] = useState({});
+
 
   const [filteredData, setFilteredData] = useState([]);
 
@@ -33,9 +36,9 @@ function App() {
   // Store changes on user inputs
   const [input, setInput] = useState(defaultInputs);
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
-  const [updateNeeded, setUpdateNeeded] = useState(true);
+
   // Store uniques categories
   const [categories, setCategories] = useState([]);
 
@@ -65,23 +68,9 @@ function App() {
   };
 
 
+
   useEffect(() => {
-    if (updateNeeded) {
-      setLoading(true);
-
-
-    }
-  }, [updateNeeded]);
-
-
-
-
-
-
-useEffect(() => {
-
-  if (loading) {
-
+    if (loading) {
       fetchData().then((data) => {
         if (typeof data === "string") {
           setOperation({
@@ -91,16 +80,13 @@ useEffect(() => {
           setSnackbarVisible(true);
         } else {
           setData(data);
-          setUpdateNeeded(false);
         }
         setLoading(false);
       });
-
     }
+  }, [loading]);
 
-}, [loading])
-
-
+  // Everytime operation changes and there is a description we set snackbar visibility to true
   useEffect(() => {
     operation?.desc && setSnackbarVisible(true);
   }, [operation]);
@@ -108,18 +94,15 @@ useEffect(() => {
   // Disable scrolling when modal visible
   useEffect(() => {
     const body = document.querySelector("body");
-    if (modalVisible) {
-      body.style.overflow = "hidden";
-    } else {
-      body.style.overflow = "auto";
-    }
+    modalVisible
+      ? (body.style.overflow = "hidden")
+      : (body.style.overflow = "auto");
   }, [modalVisible]);
 
   // When data are fetched and available, create an array of unique categories from datas.foods array and store it in categories hook.
   useEffect(() => {
-    if (filteredData) {
+    filteredData &&
       setCategories([...new Set(filteredData.map((food) => food.category))]);
-    }
   }, [filteredData]);
 
   // Everytime data changes (after adding or deleting an item for example), reapply filter
@@ -154,7 +137,7 @@ useEffect(() => {
           setInput={setInput}
           setSnackbarVisible={setSnackbarVisible}
           setOperation={setOperation}
-          setUpdateNeeded={setUpdateNeeded}
+          setLoading={setLoading}
         />
       )}
 
@@ -173,7 +156,7 @@ useEffect(() => {
       <ActionIcons
         modalVisible={modalVisible}
         setModalVisible={setModalVisible}
-        setUpdateNeeded={setUpdateNeeded}
+        setLoading={setLoading}
         setOperation={setOperation}
         setSnackbarVisible={setSnackbarVisible}
       />
@@ -195,7 +178,7 @@ useEffect(() => {
             setInput={setInput}
             setOperation={setOperation}
             setSnackbarVisible={setSnackbarVisible}
-            setUpdateNeeded={setUpdateNeeded}
+            setLoading={setLoading}
           />
         </div>
       )}
@@ -217,7 +200,7 @@ useEffect(() => {
             setEdit={setEdit}
             setInput={setInput}
             setOperation={setOperation}
-            setUpdateNeeded={setUpdateNeeded}
+            setLoading={setLoading}
           />
         </div>
       )}

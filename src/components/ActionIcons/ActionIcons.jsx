@@ -2,12 +2,12 @@ import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Fab from "@mui/material/Fab";
 
-import { deleteAll } from "../api/api";
+import { deleteAll } from "#api/api";
 
 const ActionIcons = ({
   modalVisible,
   setModalVisible,
-  setUpdateNeeded,
+  setLoading,
   setOperation,
   setSnackbarVisible
 }) => {
@@ -16,7 +16,7 @@ const ActionIcons = ({
       const success = await deleteAll();
 
       if (success === true) {
-        setUpdateNeeded(true);
+        setLoading(true);
         setOperation({
           desc: "Tous les éléments ont été supprimés avec succès",
           result: "success"

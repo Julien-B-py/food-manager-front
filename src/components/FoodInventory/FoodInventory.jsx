@@ -10,7 +10,7 @@ const FoodInventory = ({
   setInput,
   setSnackbarVisible,
   setOperation,
-  setUpdateNeeded
+  setLoading
 }) => {
   return (
     <div className="inventory">
@@ -31,7 +31,7 @@ const FoodInventory = ({
               setInput={setInput}
               setSnackbarVisible={setSnackbarVisible}
               setOperation={setOperation}
-              setUpdateNeeded={setUpdateNeeded}
+              setLoading={setLoading}
             />
           ))}
         </div>

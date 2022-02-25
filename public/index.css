@@ -50,6 +50,7 @@ h5 {
 .food {
   display: flex;
   margin: 10px 0;
+  align-items: baseline;
 }
 
 .food p {

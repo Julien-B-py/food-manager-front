@@ -4,23 +4,19 @@ import { useEffect } from "react";
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 
-import CssTextField from "./CssTextField";
+import CssTextField from "#components/shared/CssTextField";
 
-import { selectCategories } from "../constants/constants";
-import { editFood } from "../api/api";
+import { selectCategories } from "#constants/constants";
+import { editFood } from "#api/api";
 
 const EditForm = ({
   edit,
   handleChange,
   input,
   setEdit,
-  setInput,
   setOperation,
-  setUpdateNeeded
+  setLoading
 }) => {
-
-
-
   // Submit current modifications to the database to save update
   const submitFoodModif = async (e) => {
     e.preventDefault();
@@ -30,11 +26,11 @@ const EditForm = ({
       category: input.category,
       storageLife: input.storageLife,
       expDate: moment(input.expDate).format("DD/MM/YYYY"),
-      opened: input.opened,
+      opened: input.opened
     };
 
     if (food.opened) {
-       food.openedDate = input.openedDate
+      food.openedDate = input.openedDate;
     }
 
     const editedFood = edit.food.name;
@@ -47,7 +43,7 @@ const EditForm = ({
           desc: `${editedFood} modifié avec succès.`,
           result: "success"
         });
-        setUpdateNeeded(true);
+        setLoading(true);
       }
     });
   };
@@ -95,19 +91,19 @@ const EditForm = ({
           select
           value={input.opened}
         >
-        <MenuItem  value={false}>Non</MenuItem>
-        <MenuItem  value={true}>Oui</MenuItem>
+          <MenuItem value={false}>Non</MenuItem>
+          <MenuItem value={true}>Oui</MenuItem>
         </CssTextField>
 
-
-{input.opened &&         <CssTextField
-          label="Date d'ouverture/cuisson"
-          name="openedDate"
-          onChange={(e) => handleChange(e)}
-          type="date"
-          value={input.openedDate}
-        />}
-
+        {input.opened && (
+          <CssTextField
+            label="Date d'ouverture/cuisson"
+            name="openedDate"
+            onChange={(e) => handleChange(e)}
+            type="date"
+            value={input.openedDate}
+          />
+        )}
 
         <Button onClick={(e) => submitFoodModif(e)} variant="contained">
           Valider

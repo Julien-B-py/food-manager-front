@@ -3,10 +3,10 @@ import moment from "moment";
 
 import Button from "@mui/material/Button";
 
-import CssTextField from "./CssTextField";
+import CssTextField from "#components/shared/CssTextField";
 
-import { selectCategories, defaultInputs } from "../constants/constants";
-import { addFood } from "../api/api";
+import { selectCategories, defaultInputs } from "#constants/constants";
+import { addFood } from "#api/api";
 
 const AddForm = ({
   setModalVisible,
@@ -15,7 +15,7 @@ const AddForm = ({
   setInput,
   setOperation,
   setSnackbarVisible,
-  setUpdateNeeded
+  setLoading
 }) => {
   const addFoodAndHideModal = async (e) => {
     e.preventDefault();
@@ -48,7 +48,7 @@ const AddForm = ({
 
           setInput(defaultInputs);
 
-          setUpdateNeeded(true);
+          setLoading(true);
         } else {
           setOperation({
             desc: response,

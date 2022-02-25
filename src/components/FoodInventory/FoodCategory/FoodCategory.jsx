@@ -9,7 +9,7 @@ const FoodCategory = ({
   setInput,
   setSnackbarVisible,
   setOperation,
-  setUpdateNeeded
+  setLoading
 }) => {
   // Create a new array containing only food items that match current prop category
   const foodFromCategory = foods.filter((food) => food.category === category);
@@ -43,7 +43,7 @@ const FoodCategory = ({
             setInput={setInput}
             setSnackbarVisible={setSnackbarVisible}
             setOperation={setOperation}
-            setUpdateNeeded={setUpdateNeeded}
+            setLoading={setLoading}
           />
         ))}
       </div>
