@@ -5,8 +5,8 @@ const FoodInventory = ({
   categories,
   data,
   filter,
-  filterData,
   setEdit,
+  setFilter,
   setInput,
   setOperation,
   setLoading
@@ -17,7 +17,7 @@ const FoodInventory = ({
         <h1>Inventaire</h1>
       </div>
 
-      <Filter filter={filter} filterData={filterData} />
+      <Filter filter={filter} setFilter={setFilter} />
 
       {categories.length > 0 ? (
         <div className="food-list">

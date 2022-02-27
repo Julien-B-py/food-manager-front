@@ -15,53 +15,25 @@ import FoodInventory from "#components/FoodInventory";
 import Footer from "#components/Footer";
 
 const App = () => {
+  const [loading, setLoading] = useState(true);
   // Store current food list data
   const [data, setData] = useState({});
+  // Current filter value
+  const [filter, setFilter] = useState("Tout");
+  // Filtered data
+  const [filteredData, setFilteredData] = useState([]);
+  // Store uniques categories
+  const [categories, setCategories] = useState([]);
   // Determine if snackbar is visible
   const [snackbarVisible, setSnackbarVisible] = useState(false);
   // Determine if modal is visible
   const [modalVisible, setModalVisible] = useState(false);
   // Determine what operation was performed and if it was successful or not
   const [operation, setOperation] = useState({ result: "info", desc: "" });
-
-  const [filteredData, setFilteredData] = useState([]);
-
-  const [filter, setFilter] = useState("Tout");
-
+  // Track if a food item is in edit mode
   const [edit, setEdit] = useState({ enabled: false, foodId: "" });
-
   // Store changes on user inputs
   const [input, setInput] = useState(defaultInputs);
-
-  const [loading, setLoading] = useState(true);
-
-  // Store uniques categories
-  const [categories, setCategories] = useState([]);
-
-  const filterData = (e) => {
-    let value;
-    let filteredData;
-
-    // If filter input changed
-    if (e) {
-      value = e.target.value;
-      setFilter(value);
-      // If forced filtering
-    } else {
-      value = filter;
-    }
-
-    if (value === "Périmé") {
-      filteredData = data.foods.filter((food) => food.remainingDays < 1);
-    } else if (value === "Date proche") {
-      filteredData = data.foods.filter(
-        (food) => food.remainingDays <= 5 && food.remainingDays >= 1
-      );
-    } else {
-      filteredData = data.foods;
-    }
-    setFilteredData(filteredData);
-  };
 
   // Fetch data when loading is true
   useEffect(() => {
@@ -99,18 +71,33 @@ const App = () => {
       setCategories([...new Set(filteredData.map((food) => food.category))]);
   }, [filteredData]);
 
-  // Everytime data changes (after adding or deleting an item for example), reapply filter
+  // Everytime data (after adding or deleting an item for example) or filter input changes
   useEffect(() => {
     data && filterData();
-  }, [data]);
+  }, [data, filter]);
+
+  // Apply filter to data
+  const filterData = () => {
+    let filteredData;
+    if (filter === "Périmé") {
+      filteredData = data.foods.filter((food) => food.remainingDays < 1);
+    } else if (filter === "Date proche") {
+      filteredData = data.foods.filter(
+        (food) => food.remainingDays <= 5 && food.remainingDays >= 1
+      );
+    } else {
+      filteredData = data.foods;
+    }
+    setFilteredData(filteredData);
+  };
 
   // Handle and update user input values changes
-  function handleChange(e) {
+  const handleChange = (e) => {
     const { name, value } = e.target;
     setInput((prevState) => {
       return { ...prevState, [name]: value };
     });
-  }
+  };
 
   return (
     <div className="main">
@@ -126,7 +113,7 @@ const App = () => {
           categories={categories}
           data={filteredData}
           filter={filter}
-          filterData={filterData}
+          setFilter={setFilter}
           setEdit={setEdit}
           setInput={setInput}
           setOperation={setOperation}

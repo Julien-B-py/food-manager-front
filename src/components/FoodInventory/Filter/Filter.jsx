@@ -3,7 +3,7 @@ import MenuItem from "@mui/material/MenuItem";
 import CssTextField from "#components/shared/CssTextField";
 import { filterOptions } from "#constants/constants";
 
-const Filter = ({ filter, filterData }) => {
+const Filter = ({ filter, setFilter }) => {
   return (
     <div className="filter">
       <CssTextField
@@ -12,7 +12,7 @@ const Filter = ({ filter, filterData }) => {
         select
         label="Filtrer"
         value={filter}
-        onChange={(e) => filterData(e)}
+        onChange={(e) => setFilter(e.target.value)}
       >
         {filterOptions.map((filterOption) => (
           <MenuItem key={filterOption} value={filterOption}>
