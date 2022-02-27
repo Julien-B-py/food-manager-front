@@ -1,38 +1,13 @@
-import Filter from "./Filter";
-import FoodCategory from "./FoodCategory";
-
-const FoodInventory = ({
-  categories,
-  data,
-  filter,
-  setEdit,
-  setFilter,
-  setInput,
-  setOperation,
-  setLoading
-}) => {
+const FoodInventory = ({ categories, children, filterComponent }) => {
   return (
     <div className="inventory">
       <div className="header">
         <h1>Inventaire</h1>
       </div>
-
-      <Filter filter={filter} setFilter={setFilter} />
+      {filterComponent}
 
       {categories.length > 0 ? (
-        <div className="food-list">
-          {categories.map((category, index) => (
-            <FoodCategory
-              key={index}
-              category={category}
-              foods={data}
-              setEdit={setEdit}
-              setInput={setInput}
-              setOperation={setOperation}
-              setLoading={setLoading}
-            />
-          ))}
-        </div>
+        <div className="food-list">{children}</div>
       ) : (
         <div className="empty-list">Liste vide, merci d'ajouter un élément</div>
       )}

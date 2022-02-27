@@ -11,6 +11,9 @@ import { defaultInputs } from "#constants/constants";
 import ActionIcons from "#components/ActionIcons";
 import AddForm from "#components/AddForm";
 import EditForm from "#components/EditForm";
+import Filter from "#components/FoodInventory/Filter";
+import Food from "#components/FoodInventory/FoodCategory/Food";
+import FoodCategory from "#components/FoodInventory/FoodCategory";
 import FoodInventory from "#components/FoodInventory";
 import Footer from "#components/Footer";
 
@@ -110,15 +113,30 @@ const App = () => {
 
       {!loading && (
         <FoodInventory
+          filterComponent=<Filter filter={filter} setFilter={setFilter} />
           categories={categories}
-          data={filteredData}
-          filter={filter}
-          setFilter={setFilter}
-          setEdit={setEdit}
-          setInput={setInput}
-          setOperation={setOperation}
-          setLoading={setLoading}
-        />
+        >
+          {categories.map((category) => (
+            <FoodCategory
+              key={category}
+              category={category}
+              foods={filteredData}
+            >
+              {filteredData
+                .filter((food) => food.category === category)
+                .map((food) => (
+                  <Food
+                    key={food._id}
+                    food={food}
+                    setEdit={setEdit}
+                    setInput={setInput}
+                    setOperation={setOperation}
+                    setLoading={setLoading}
+                  />
+                ))}
+            </FoodCategory>
+          ))}
+        </FoodInventory>
       )}
 
       <Snackbar
