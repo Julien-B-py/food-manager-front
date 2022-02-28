@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+
 const FoodInventory = ({ categories, children, filterComponent }) => {
   return (
     <div className="inventory">
@@ -13,6 +15,10 @@ const FoodInventory = ({ categories, children, filterComponent }) => {
       )}
     </div>
   );
+};
+
+FoodInventory.propTypes = {
+  categories: PropTypes.array,
 };
 
 export default FoodInventory;

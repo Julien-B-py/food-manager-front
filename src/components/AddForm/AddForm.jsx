@@ -13,7 +13,8 @@ const AddForm = ({
   input,
   setInput,
   setOperation,
-  setLoading
+  setLoading,
+  suggestions
 }) => {
   const addFoodAndHideModal = async (e) => {
     e.preventDefault();

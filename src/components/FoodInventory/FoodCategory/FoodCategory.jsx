@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import PropTypes from "prop-types";
 
 import { gsap } from "gsap";
 
@@ -47,6 +48,11 @@ const FoodCategory = ({ category, children, foods }) => {
       <div className="foodList">{children}</div>
     </div>
   );
+};
+
+FoodCategory.propTypes = {
+  category: PropTypes.string,
+  foods: PropTypes.array
 };
 
 export default FoodCategory;

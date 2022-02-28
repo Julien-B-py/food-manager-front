@@ -1,4 +1,5 @@
 import { useState } from "react";
+import PropTypes from "prop-types";
 
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
@@ -129,6 +130,14 @@ const Food = ({ food, setEdit, setInput, setOperation, setLoading }) => {
       </Dialog>
     </div>
   );
+};
+
+Food.propTypes = {
+  food: PropTypes.object,
+  setEdit: PropTypes.func,
+  setInput: PropTypes.func,
+  setOperation: PropTypes.func,
+  setLoading: PropTypes.func
 };
 
 export default Food;

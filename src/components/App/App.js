@@ -5,8 +5,9 @@ import Alert from "@mui/material/Alert";
 import CircularProgress from "@mui/material/CircularProgress";
 import Fab from "@mui/material/Fab";
 import Snackbar from "@mui/material/Snackbar";
+import moment from "moment";
 
-import { fetchData } from "#api/api";
+import { fetchData, fetchSuggestions } from "#api/api";
 import { defaultInputs } from "#constants/constants";
 import ActionIcons from "#components/ActionIcons";
 import AddForm from "#components/AddForm";
@@ -21,6 +22,8 @@ const App = () => {
   const [loading, setLoading] = useState(true);
   // Store current food list data
   const [data, setData] = useState({});
+  //
+  const [suggestions, setSuggestions] = useState([]);
   // Current filter value
   const [filter, setFilter] = useState("Tout");
   // Filtered data
@@ -41,6 +44,7 @@ const App = () => {
   // Fetch data when loading is true
   useEffect(() => {
     if (loading) {
+
       fetchData().then((data) => {
         if (typeof data === "string") {
           setOperation({
@@ -52,6 +56,12 @@ const App = () => {
         }
         setLoading(false);
       });
+
+
+      fetchSuggestions().then((data) => setSuggestions(data))
+
+
+
     }
   }, [loading]);
 
@@ -78,6 +88,17 @@ const App = () => {
   useEffect(() => {
     data && filterData();
   }, [data, filter]);
+
+
+
+  useEffect(() => {
+    // Prevent input to be cleared
+    if (!input.expDate) {
+      setInput((prevState) => {
+        return {...prevState, expDate:moment().format("YYYY-MM-DD")}
+      })
+    }
+  }, [input])
 
   // Apply filter to data
   const filterData = () => {
@@ -174,6 +195,7 @@ const App = () => {
             setInput={setInput}
             setOperation={setOperation}
             setLoading={setLoading}
+            suggestions={suggestions}
           />
         </div>
       )}

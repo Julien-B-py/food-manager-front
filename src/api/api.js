@@ -1,9 +1,9 @@
 import axios from "axios";
 
 // Online
-const domain = "https://sleepy-reef-78196.herokuapp.com";
+// const domain = "https://sleepy-reef-78196.herokuapp.com";
 // Local
-// const domain = "http://localhost:5000";
+const domain = "http://localhost:5000";
 
 // Remove specific entry from the current list
 export const removeFood = async (foodId) => {
@@ -52,6 +52,18 @@ export const fetchData = async () => {
       timeout: 10000
     });
     return response.data;
+  } catch (error) {
+    return error.message;
+  }
+};
+
+// Get food suggestions to speed up adding process
+export const fetchSuggestions = async () => {
+  try {
+    const response = await axios(`${domain}/api/suggestions`, {
+      timeout: 10000
+    });
+    return response.data.suggestions;
   } catch (error) {
     return error.message;
   }

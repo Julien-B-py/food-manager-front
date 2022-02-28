@@ -45,6 +45,7 @@ h5 {
   padding: 3rem;
   border-radius: 5px;
   border: solid 2px rgb(126, 175, 215);
+  margin: auto;
 }
 
 .food {
@@ -166,9 +167,6 @@ h5 {
   height: 0;
 }
 
-.dropdown-icon {
-  transition: transform 0.2s ease-out;
-}
 
 .collapsed {
   transform: rotate(-180deg);
@@ -200,10 +198,6 @@ h5 {
   right: 24px;
 }
 
-.MuiButtonBase-root.add-button {}
-
-.MuiButtonBase-root.delete-all-button {}
-
 .MuiButtonBase-root.close-modal {
   position: absolute;
   top: 24px;
@@ -213,7 +207,6 @@ h5 {
 .modal {
   position: fixed;
   top: 0;
-  left: 0;
   width: 100%;
   height: 100%;
   z-index: 10;
@@ -222,6 +215,7 @@ h5 {
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow-y: scroll;
 }
 
 .loading {
