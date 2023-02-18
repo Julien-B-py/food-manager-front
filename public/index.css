@@ -55,7 +55,7 @@ h5 {
 }
 
 .food p {
-  word-break: break-all;
+  word-break: break-word;
 }
 
 .add-input {
@@ -166,7 +166,6 @@ h5 {
 .hidden {
   height: 0;
 }
-
 
 .collapsed {
   transform: rotate(-180deg);

@@ -44,7 +44,6 @@ const App = () => {
   // Fetch data when loading is true
   useEffect(() => {
     if (loading) {
-
       fetchData().then((data) => {
         if (typeof data === "string") {
           setOperation({
@@ -57,11 +56,7 @@ const App = () => {
         setLoading(false);
       });
 
-
-      fetchSuggestions().then((data) => setSuggestions(data))
-
-
-
+      fetchSuggestions().then((data) => setSuggestions(data));
     }
   }, [loading]);
 
@@ -89,16 +84,30 @@ const App = () => {
     data && filterData();
   }, [data, filter]);
 
-
-
   useEffect(() => {
     // Prevent input to be cleared
     if (!input.expDate) {
       setInput((prevState) => {
-        return {...prevState, expDate:moment().format("YYYY-MM-DD")}
-      })
+        return { ...prevState, expDate: moment().format("YYYY-MM-DD") };
+      });
     }
-  }, [input])
+  }, [input]);
+
+  useEffect(() => {
+    const foundFood = suggestions.filter(
+      (suggestion) => suggestion.name === input.name
+    );
+
+    if (!foundFood.length) return;
+
+    setInput((prevState) => {
+      return {
+        ...prevState,
+        category: foundFood[0].category,
+        storageLife: foundFood[0].storageLife
+      };
+    });
+  }, [input.name]);
 
   // Apply filter to data
   const filterData = () => {
@@ -206,7 +215,7 @@ const App = () => {
             color="primary"
             aria-label="add"
             className="close-modal"
-            onClick={() => setEdit(false)}
+            onClick={() => setEdit({ enabled: false, foodId: "" })}
           >
             <CloseIcon />
           </Fab>

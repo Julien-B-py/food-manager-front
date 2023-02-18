@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 
+import Autocomplete from "@mui/material/Autocomplete";
 import Button from "@mui/material/Button";
 import moment from "moment";
 
@@ -70,15 +71,28 @@ const AddForm = ({
     setInput(defaultInputs);
   }, []);
 
+  const defaultProps = {
+    options: suggestions,
+    getOptionLabel: (option) => option.name
+  };
+
   return (
     <div className="user-controls">
       <form className="add-input">
         <span>Ajouter un aliment</span>
-        <CssTextField
-          label="Aliment"
-          name="name"
-          onChange={(e) => handleChange(e)}
-          value={input.name}
+
+        <Autocomplete
+          {...defaultProps}
+          onInputChange={(e, newInputValue) => {
+            setInput((prevState) => {
+              return { ...prevState, name: newInputValue };
+            });
+          }}
+          freeSolo
+          sx={{ width: 300 }}
+          renderInput={(params) => (
+            <CssTextField {...params} value={input.name} label="Aliment" />
+          )}
         />
 
         <CssTextField
